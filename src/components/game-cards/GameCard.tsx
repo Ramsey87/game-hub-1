@@ -10,7 +10,7 @@ interface props {
 
 const GameCard = ({ game }: props) => {
   return (
-    <Card>
+    <Card minHeight={{ base: "300px", md: "3500px", lg: "350px" }}>
       <Image src={getCroppedImageUrl(game.background_image)} />
       <CardBody>
         <Heading fontSize={"2xl"}>{game.name}</Heading>
