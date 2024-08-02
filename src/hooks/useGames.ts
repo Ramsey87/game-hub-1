@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import apiClinet from "../services/api-clinet";
 import { CanceledError } from "axios";
 import { Genre } from "./useGenras";
-import { AxiosRequestConfig } from "axios";
+
 
  export interface Platform {
   id: number;
@@ -25,7 +25,7 @@ interface FetchGameResponse {
 
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const useGames = (selectedGenre: Genre | null, _requestCofig?: AxiosRequestConfig, deps?: any[]) => {
+  const useGames = (selectedGenre: Genre | null, selectedPlatform: Platform | null, deps?: any[]) => {
     const [games, setGames] = useState<Game[]>([]);
     const [error, setError] = useState("");
     const [isLoading, setIsLoading] =useState(false)
@@ -36,7 +36,7 @@ interface FetchGameResponse {
 
     setIsLoading(true)
     apiClinet
-    .get<FetchGameResponse>("/games", {params: {genres:selectedGenre?.id }, signal: controller.signal})
+    .get<FetchGameResponse>("/games", {params: {genres:selectedGenre?.id, platform: selectedPlatform?.id }, signal: controller.signal})
       .then((res) => {
         setIsLoading(false);
         setGames(res.data.results);
